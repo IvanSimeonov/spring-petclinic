@@ -23,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledInNativeImage;
@@ -54,9 +56,9 @@ class VisitControllerTests {
 
 	@BeforeEach
 	void init() {
-		Owner owner = new Owner();
+		Optional<Owner> owner = Optional.of(new Owner());
 		Pet pet = new Pet();
-		owner.addPet(pet);
+		owner.get().addPet(pet);
 		pet.setId(TEST_PET_ID);
 		given(this.owners.findById(TEST_OWNER_ID)).willReturn(owner);
 	}

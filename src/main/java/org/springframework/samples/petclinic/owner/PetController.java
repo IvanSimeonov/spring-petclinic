@@ -29,9 +29,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * @author Juergen Hoeller
@@ -58,7 +58,7 @@ class PetController {
 	@ModelAttribute("owner")
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
 
-		Owner owner = this.owners.findById(ownerId);
+		var owner = this.owners.findById(ownerId).orElse(null);
 		if (owner == null) {
 			throw new IllegalArgumentException("Owner ID not found: " + ownerId);
 		}
@@ -73,7 +73,7 @@ class PetController {
 			return new Pet();
 		}
 
-		Owner owner = this.owners.findById(ownerId);
+		var owner = this.owners.findById(ownerId).orElse(null);
 		if (owner == null) {
 			throw new IllegalArgumentException("Owner ID not found: " + ownerId);
 		}
